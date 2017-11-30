@@ -18,9 +18,10 @@ h = waitbar(0,'Please wait (making directory list)... ');
 d = dir(fullfile(filePath, '*.dpct'));
 d([d.isdir]) = [];
 fNamelist = {d.name}';
-FileNum = size(fNamelist,1);
 dotOccurance = strfind(fileName,'.');
 startFileIndex = str2num(fileName(dotOccurance(1)+1:dotOccurance(2)-1));
+endFileIndex = size(fNamelist,1);
+%endFileIndex = 10;
 
 %% output file settings
 outputFileName = '308_9C_Standrd_S2_NL_ON_FL_OFF.txt';
@@ -33,10 +34,9 @@ end
 waitbar(5,h,'Starting to read, format and save.');
 format = '%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f';
 start_time = clock;
-FileNum=10;
 startMsg = sprintf('Starting reading from file number: %d',startFileIndex);
 disp(startMsg);
-for idx=startFileIndex:FileNum
+for idx=startFileIndex:endFileIndex
     
     DataFile1=fullfile(filePath,char(fNamelist(idx)));
     [bb,mod1,tile,die,frame_nr,delay,timestamp,p1,p2,p3,p4,temp,status,event_id,frame_counter] = textread(DataFile1,format,'delimiter',',','headerlines',12);
@@ -46,7 +46,7 @@ for idx=startFileIndex:FileNum
     dlmwrite(outputFileName,pixel,'-append','precision', 16);
     if idx ==startFileIndex
       one_iteration = etime(clock,start_time);
-      esttime = one_iteration * FileNum;
+      esttime = one_iteration * endFileIndex;
      end
     waitbar(idx/FileNum,h,sprintf('%d/%d file(s). Est. completion time =%4.1f sec',idx,FileNum,esttime-etime(clock,start_time)));
    
