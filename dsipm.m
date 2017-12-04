@@ -19,7 +19,7 @@ d = dir(fullfile(filePath, '*.dpct'));
 d([d.isdir]) = [];
 fNamelist = {d.name}';
 dotOccurance = strfind(fileName,'.');
-startFileIndex = str2num(fileName(dotOccurance(1)+1:dotOccurance(2)-1));
+startFileIndex = str2num(fileName(dotOccurance(1)+1:dotOccurance(2)-1)+1);
 endFileIndex = size(fNamelist,1);
 %endFileIndex = 10;
 
@@ -48,7 +48,7 @@ for idx=startFileIndex:endFileIndex
       one_iteration = etime(clock,start_time);
       esttime = one_iteration * endFileIndex;
      end
-    waitbar(idx/FileNum,h,sprintf('%d/%d file(s). Est. completion time =%4.1f sec',idx,FileNum,esttime-etime(clock,start_time)));
+    waitbar(idx/endFileIndex,h,sprintf('%d/%d file(s). Est. completion time =%4.1f sec',idx,endFileIndex,esttime-etime(clock,start_time)));
    
 end
 
