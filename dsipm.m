@@ -19,7 +19,7 @@ d = dir(fullfile(filePath, '*.dpct'));
 d([d.isdir]) = [];
 fNamelist = {d.name}';
 dotOccurance = strfind(fileName,'.');
-startFileIndex = str2num(fileName(dotOccurance(1)+1:dotOccurance(2)-1)+1);
+startFileIndex = str2num(fileName(dotOccurance(1)+1:dotOccurance(2)-1))+1;
 endFileIndex = size(fNamelist,1);
 %endFileIndex = 10;
 
